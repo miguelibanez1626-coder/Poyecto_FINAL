@@ -1,0 +1,129 @@
+:root {
+
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  line-height: 1.5;
+
+  font-weight: 400;
+
+
+
+  /* Forzamos esquema oscuro para que coincida con el Dashboard */
+
+  color-scheme: dark;
+
+  color: rgba(255, 255, 255, 0.87);
+
+  background-color: #121212;
+
+
+
+  font-synthesis: none;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+
+
+body {
+
+  margin: 0;
+
+  padding: 0;
+
+  min-width: 320px;
+
+  min-height: 100vh;
+
+  background-color: #121212; /* Fondo base oscuro */
+
+  overflow-x: hidden; /* Evita scroll horizontal innecesario */
+
+}
+
+
+
+/* --- ESTILOS DE SCROLLBAR (Barra de desplazamiento moderna) --- */
+
+::-webkit-scrollbar {
+
+    width: 10px;
+
+    height: 10px;
+
+}
+
+
+
+::-webkit-scrollbar-track {
+
+    background: #1e1e1e;
+
+}
+
+
+
+::-webkit-scrollbar-thumb {
+
+    background: #444;
+
+    border-radius: 5px;
+
+    border: 2px solid #1e1e1e; /* Crea un borde para que se vea flotante */
+
+}
+
+
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: #666;
+
+}
+
+
+
+/* --- CLASES DE UTILIDAD PERSONALIZADAS --- */
+
+
+
+/* Efecto hover suave para los links del Sidebar */
+
+.hover-light:hover {
+
+    background-color: rgba(255, 255, 255, 0.08);
+
+    color: #fff !important;
+
+    transform: translateX(5px); /* Pequeño movimiento a la derecha */
+
+}
+
+
+
+/* Animación suave para los botones */
+
+button {
+
+  transition: all 0.2s ease-in-out;
+
+}
+
+button:active {
+
+  transform: scale(0.98);
+
+}
+
+
+
+a {
+
+  text-decoration: none;
+
+}
