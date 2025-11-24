@@ -36,7 +36,13 @@ STR_CONN = (
 )
 
 # --- 3. FUNCIONES AUXILIARES (DB Y AUTH) ---
-
+# --- MODELO PARA EL REGISTRO ---
+class UserRegister(BaseModel):
+    firstName: str
+    lastName: str
+    email: str
+    password: str
+    
 def get_data_from_sql(query):
     """Ejecuta una consulta SQL y devuelve una lista de diccionarios"""
     try:
@@ -222,6 +228,35 @@ def obtener_catalogo():
     # NOTA: 'ORDER BY NEWID()' es el truco en SQL Server para desordenar aleatoriamente
     return get_data_from_sql(sql)
 
+# --- ENDPOINT DE REGISTRO ---
+@app.post("/register")
+async def register_user(user: UserRegister):
+    """Registra un nuevo cliente en la base de datos"""
+    try:
+        with pyodbc.connect(STR_CONN) as conn:
+            cursor = conn.cursor()
+            
+            # 1. Verificar si el correo ya existe
+            check_query = "SELECT COUNT(*) FROM [Data].[Customer] WHERE EmailAddress = ?"
+            cursor.execute(check_query, (user.email,))
+            if cursor.fetchone()[0] > 0:
+                raise HTTPException(status_code=400, detail="El correo electrónico ya está registrado")
+
+            # 2. Insertar el nuevo usuario
+            insert_query = """
+            INSERT INTO [Data].[Customer] (GivenName, Surname, EmailAddress, Password)
+            VALUES (?, ?, ?, ?)
+            """
+            cursor.execute(insert_query, (user.firstName, user.lastName, user.email, user.password))
+            conn.commit() # ¡Importante para guardar cambios!
+            
+            return {"message": "Usuario registrado exitosamente"}
+            
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"❌ Error Registro: {e}")
+        raise HTTPException(status_code=500, detail="Error al registrar usuario")
 
 # --- 7. ENDPOINTS PARA ADMINISTRADOR (ORIGINALES) ---
 # Nota: La función 'generar_where_fecha' se usa para simular "viaje en el tiempo" a 2021

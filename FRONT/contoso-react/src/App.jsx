@@ -97,7 +97,7 @@ function App() {
 
     // Estados de Configuración
     const [config, setConfig] = useState({
-        metaVentas: 500000,
+        metaVentas: 500000000,
         notificaciones: true,
         modoMantenimiento: false
     });
